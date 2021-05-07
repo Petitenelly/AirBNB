@@ -6,22 +6,18 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
-
-require 'faker'
+Dogsitter.destroy_all
+City.destroy_all
+Dog.destroy_all
+Stroll.destroy_all
 10.times do
-  dog = Dog.create!(first_name: Faker::Name.first_name)
-end
-puts "10 dogs ont été crées"
 
+    c = City.create(name: Faker::Address.city)
+    ds = Dogsitter.create(name: Faker::Name.name, city: c)
+    d = Dog.create(name: Faker::Name.name, address: Faker::Address.street_address, city: c)
+    s = Stroll.new(date: Faker::Date.forward(days: 23))
+    s.dogsitter = ds
+    s.dog = d
+    s.save
+  end
 
-10.times do
-  dog_sitter = DogSitter.create!(first_name: Faker::Name.first_name)
-end
-puts "10 dogsitters ont été crées"
-
-
-10.times do
-  city = City.create!(city: Faker::Address.city)
-end
-puts "10 villes ont été crées"
